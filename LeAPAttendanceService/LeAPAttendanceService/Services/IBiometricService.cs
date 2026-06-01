@@ -4,7 +4,7 @@ namespace LeAPAttendanceService.Services;
 
 public interface IBiometricService
 {
-    Task SyncDeviceTimeAsync(CancellationToken cancellationToken);
+    Task SyncDeviceTimeAsync(LeapBiometricServer server, CancellationToken cancellationToken);
 
-    Task<IReadOnlyList<BiometricAttendanceRecord>> GetAttendanceLogsAsync(DateTime fromInclusive, CancellationToken cancellationToken);
+    Task<IReadOnlyList<BiometricAttendanceRecord>> GetAttendanceLogsAsync(LeapBiometricServer server, DateTime fromInclusive, CancellationToken cancellationToken);
 }

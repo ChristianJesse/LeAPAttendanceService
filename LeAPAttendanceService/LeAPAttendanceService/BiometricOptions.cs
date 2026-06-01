@@ -16,7 +16,7 @@ public sealed class BiometricOptions
     public int MachineNumber { get; set; } = 1;
 
     // How often the worker should reconnect and read new attendance logs.
-    public int PollingIntervalSeconds { get; set; } = 10;
+    public int PollingIntervalSeconds { get; set; } = 5;
 
     // On the first run we read a small history window so we can catch recent punches.
     public int InitialLookBackMinutes { get; set; } = 1440;

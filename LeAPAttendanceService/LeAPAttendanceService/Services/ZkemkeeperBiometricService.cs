@@ -28,22 +28,22 @@ public sealed class ZkemkeeperBiometricService : IBiometricService
         _options = options.Value;
     }
 
-    public Task<IReadOnlyList<BiometricAttendanceRecord>> GetAttendanceLogsAsync(DateTime fromInclusive, CancellationToken cancellationToken)
+    public Task<IReadOnlyList<BiometricAttendanceRecord>> GetAttendanceLogsAsync(LeapBiometricServer server, DateTime fromInclusive, CancellationToken cancellationToken)
     {
-        return Task.Run(() => ReadAttendanceLogs(fromInclusive), cancellationToken);
+        return Task.Run(() => ReadAttendanceLogs(server, fromInclusive), cancellationToken);
     }
 
-    public Task SyncDeviceTimeAsync(CancellationToken cancellationToken)
+    public Task SyncDeviceTimeAsync(LeapBiometricServer server, CancellationToken cancellationToken)
     {
-        return Task.Run(SyncDeviceTime, cancellationToken);
+        return Task.Run(() => SyncDeviceTime(server), cancellationToken);
     }
 
-    private IReadOnlyList<BiometricAttendanceRecord> ReadAttendanceLogs(DateTime fromInclusive)
+    private IReadOnlyList<BiometricAttendanceRecord> ReadAttendanceLogs(LeapBiometricServer server, DateTime fromInclusive)
     {
-        ValidateOptions();
+        ValidateOptions(server);
 
         var records = new List<BiometricAttendanceRecord>();
-        ExecuteWithConnectedDevice(zk =>
+        ExecuteWithConnectedDevice(server, zk =>
         {
             // The device is disabled briefly while we read logs so the SDK can read a stable snapshot.
             zk.EnableDevice(_options.MachineNumber, false);
@@ -66,35 +66,40 @@ public sealed class ZkemkeeperBiometricService : IBiometricService
         return records.OrderBy(record => record.Timestamp).ToList();
     }
 
-    private void SyncDeviceTime()
+    private void SyncDeviceTime(LeapBiometricServer server)
     {
-        ValidateOptions();
+        ValidateOptions(server);
 
-        ExecuteWithConnectedDevice(zk =>
+        ExecuteWithConnectedDevice(server, zk =>
         {
             if (!zk.SetDeviceTime(_options.MachineNumber))
             {
                 throw new InvalidOperationException(
-                    $"Connected to {_options.DeviceIp}:{_options.Port}, but the device clock could not be synchronized.");
+                    $"Connected to {server.IPAddress}:{server.Port}, but the device clock could not be synchronized.");
             }
 
             _logger.LogInformation(
                 "Device time synchronized successfully for {DeviceIp}:{Port}.",
-                _options.DeviceIp,
-                _options.Port);
+                server.IPAddress,
+                server.Port);
         });
     }
 
-    private void ValidateOptions()
+    private void ValidateOptions(LeapBiometricServer server)
     {
-        if (string.IsNullOrWhiteSpace(_options.DeviceIp))
+        if (server is null)
         {
-            throw new InvalidOperationException("Biometric device IP is missing. Set Biometric:DeviceIp in appsettings.json.");
+            throw new ArgumentNullException(nameof(server));
         }
 
-        if (_options.Port <= 0)
+        if (string.IsNullOrWhiteSpace(server.IPAddress))
         {
-            throw new InvalidOperationException("Biometric port must be greater than zero.");
+            throw new InvalidOperationException("Biometric server IP address is missing.");
+        }
+
+        if (server.Port <= 0)
+        {
+            throw new InvalidOperationException("Biometric server port must be greater than zero.");
         }
     }
 
@@ -131,7 +136,7 @@ public sealed class ZkemkeeperBiometricService : IBiometricService
             "You can use Scripts\\Register-ZkSdk.ps1 as Administrator to install and register the SDK.");
     }
 
-    private void ExecuteWithConnectedDevice(Action<dynamic> action)
+    private void ExecuteWithConnectedDevice(LeapBiometricServer server, Action<dynamic> action)
     {
         object? comObject = null;
         dynamic? zk = null;
@@ -141,10 +146,10 @@ public sealed class ZkemkeeperBiometricService : IBiometricService
             comObject = CreateComObject();
             zk = comObject;
 
-            if (!zk.Connect_Net(_options.DeviceIp, _options.Port))
+            if (!zk.Connect_Net(server.IPAddress, server.Port))
             {
                 throw new InvalidOperationException(
-                    $"Unable to connect to device at {_options.DeviceIp}:{_options.Port}. Check the IP, port, and firewall rules.");
+                    $"Unable to connect to device at {server.IPAddress}:{server.Port}. Check the IP, port, and firewall rules.");
             }
 
             action(zk);

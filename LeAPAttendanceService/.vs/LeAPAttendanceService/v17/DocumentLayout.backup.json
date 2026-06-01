@@ -7,16 +7,16 @@
       "RelativeMoniker": "D:0:0:{0AE57315-9D25-4B9C-8178-D275371A8BD5}|LeAPAttendanceService\\LeAPAttendanceService.csproj|solutionrelative:leapattendanceservice\\services\\leaprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{0AE57315-9D25-4B9C-8178-D275371A8BD5}|LeAPAttendanceService\\LeAPAttendanceService.csproj|c:\\users\\cooreto\\desktop\\2026 files\\hr service\\leapattendanceservice\\leapattendanceservice\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{0AE57315-9D25-4B9C-8178-D275371A8BD5}|LeAPAttendanceService\\LeAPAttendanceService.csproj|solutionrelative:leapattendanceservice\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{0AE57315-9D25-4B9C-8178-D275371A8BD5}|LeAPAttendanceService\\LeAPAttendanceService.csproj|c:\\users\\cooreto\\desktop\\2026 files\\hr service\\leapattendanceservice\\leapattendanceservice\\biometricoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0AE57315-9D25-4B9C-8178-D275371A8BD5}|LeAPAttendanceService\\LeAPAttendanceService.csproj|solutionrelative:leapattendanceservice\\biometricoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0AE57315-9D25-4B9C-8178-D275371A8BD5}|LeAPAttendanceService\\LeAPAttendanceService.csproj|c:\\users\\cooreto\\desktop\\2026 files\\hr service\\leapattendanceservice\\leapattendanceservice\\worker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0AE57315-9D25-4B9C-8178-D275371A8BD5}|LeAPAttendanceService\\LeAPAttendanceService.csproj|solutionrelative:leapattendanceservice\\worker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0AE57315-9D25-4B9C-8178-D275371A8BD5}|LeAPAttendanceService\\LeAPAttendanceService.csproj|c:\\users\\cooreto\\desktop\\2026 files\\hr service\\leapattendanceservice\\leapattendanceservice\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{0AE57315-9D25-4B9C-8178-D275371A8BD5}|LeAPAttendanceService\\LeAPAttendanceService.csproj|solutionrelative:leapattendanceservice\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0AE57315-9D25-4B9C-8178-D275371A8BD5}|LeAPAttendanceService\\LeAPAttendanceService.csproj|c:\\users\\cooreto\\desktop\\2026 files\\hr service\\leapattendanceservice\\leapattendanceservice\\globalusings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -50,7 +50,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "C:\\Users\\COOreto\\Desktop\\2026 Files\\HR Service\\LeAPAttendanceService\\LeAPAttendanceService\\appsettings.Development.json",
               "RelativeDocumentMoniker": "LeAPAttendanceService\\appsettings.Development.json",
@@ -69,20 +69,20 @@
               "RelativeDocumentMoniker": "LeAPAttendanceService\\Services\\LeAPRepository.cs",
               "ToolTip": "C:\\Users\\COOreto\\Desktop\\2026 Files\\HR Service\\LeAPAttendanceService\\LeAPAttendanceService\\Services\\LeAPRepository.cs",
               "RelativeToolTip": "LeAPAttendanceService\\Services\\LeAPRepository.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAEwD8AAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-01T03:38:20.369Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "BiometricOptions.cs",
               "DocumentMoniker": "C:\\Users\\COOreto\\Desktop\\2026 Files\\HR Service\\LeAPAttendanceService\\LeAPAttendanceService\\BiometricOptions.cs",
               "RelativeDocumentMoniker": "LeAPAttendanceService\\BiometricOptions.cs",
               "ToolTip": "C:\\Users\\COOreto\\Desktop\\2026 Files\\HR Service\\LeAPAttendanceService\\LeAPAttendanceService\\BiometricOptions.cs",
               "RelativeToolTip": "LeAPAttendanceService\\BiometricOptions.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAWwBEAAABBAAAAAAAAAA==",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAWwBIAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-25T05:29:41.551Z",
               "EditorCaption": ""
@@ -125,13 +125,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Worker.cs",
               "DocumentMoniker": "C:\\Users\\COOreto\\Desktop\\2026 Files\\HR Service\\LeAPAttendanceService\\LeAPAttendanceService\\Worker.cs",
               "RelativeDocumentMoniker": "LeAPAttendanceService\\Worker.cs",
               "ToolTip": "C:\\Users\\COOreto\\Desktop\\2026 Files\\HR Service\\LeAPAttendanceService\\LeAPAttendanceService\\Worker.cs",
               "RelativeToolTip": "LeAPAttendanceService\\Worker.cs",
-              "ViewState": "AgIAAGQAAAAAAAAAAAASwHAAAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwCYAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-25T05:29:35.86Z",
               "EditorCaption": ""

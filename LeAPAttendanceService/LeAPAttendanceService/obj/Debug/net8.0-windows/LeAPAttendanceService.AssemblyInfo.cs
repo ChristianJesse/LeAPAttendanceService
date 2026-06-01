@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LeAPAttendanceService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a9306efbcaed6951e7f923b1eab24d96c473e3d6")]
 [assembly: System.Reflection.AssemblyProductAttribute("LeAPAttendanceService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LeAPAttendanceService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -13,7 +13,12 @@ public class Program
 
         builder.AddServiceDefaults();
         builder.Services.Configure<BiometricOptions>(builder.Configuration.GetSection(BiometricOptions.SectionName));
+        builder.Services.Configure<DatabaseOptions>(builder.Configuration.GetSection(DatabaseOptions.SectionName));
+        builder.Services.Configure<SqlRegistryOptions>(builder.Configuration.GetSection(SqlRegistryOptions.SectionName));
+        builder.Services.AddSingleton<IConfigConnection, ConfigConnection>();
+        builder.Services.AddSingleton<IConfigSqlLoader, RegistrySqlConfigurationLoader>();
         builder.Services.AddSingleton<IBiometricService, ZkemkeeperBiometricService>();
+        builder.Services.AddSingleton<ILeAPRepository, LeAPRepository>();
         builder.Services.AddHostedService<Worker>();
 
         var host = builder.Build();
