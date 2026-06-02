@@ -32,7 +32,7 @@ public sealed class LeAPRepository : ILeAPRepository
         }
     }
 
-    public async Task<IReadOnlyList<LeapBiometricServer>> GetBiometricServersAsync(CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<LeapBiometricServer>> fnGetBiometricServersAsync(CancellationToken cancellationToken)
     {
         await using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync(cancellationToken);
@@ -48,7 +48,7 @@ public sealed class LeAPRepository : ILeAPRepository
         return servers.ToList();
     }
 
-    public async Task SaveAttendanceRecordsAsync(int serverId, IEnumerable<BiometricAttendanceRecord> records, CancellationToken cancellationToken)
+    public async Task fnSaveAttendanceRecordsAsync(int serverId, IEnumerable<BiometricAttendanceRecord> records, CancellationToken cancellationToken)
     {
         var table = CreateAttendanceTable(serverId, records);
         var rowCount = table.Rows.Count;
@@ -71,6 +71,59 @@ public sealed class LeAPRepository : ILeAPRepository
         });
 
         await command.ExecuteNonQueryAsync(cancellationToken);
+    }
+
+    public async Task<int> fnGetBioInterval(CancellationToken cancellationToken)
+    {
+        return await GetConfigurationValueAsync(39, "BioInterval", cancellationToken);
+    }
+
+    public async Task<int> fnGetBioLookBack(CancellationToken cancellationToken)
+    {
+        return await GetConfigurationValueAsync(39, "BioLookBack", cancellationToken);
+    }
+
+    public async Task fnSaveBiometricLogs(int serverId, int error, string type, string message, CancellationToken cancellationToken)
+    {
+        await using var connection = new SqlConnection(_connectionString);
+        await connection.OpenAsync(cancellationToken);
+
+        await using var command = new SqlCommand("spLEAP", connection)
+        {
+            CommandType = CommandType.StoredProcedure
+        };
+
+        command.Parameters.Add(new SqlParameter("@pOption", SqlDbType.Int) { Value = 40 });
+        command.Parameters.Add(new SqlParameter("@pServerID", SqlDbType.Int) { Value = serverId });
+        command.Parameters.Add(new SqlParameter("@pError", SqlDbType.Int) { Value = error });
+        command.Parameters.Add(new SqlParameter("@pType", SqlDbType.NVarChar, 128) { Value = type });
+        command.Parameters.Add(new SqlParameter("@pMessage", SqlDbType.NVarChar, -1) { Value = message ?? string.Empty });
+
+        await command.ExecuteNonQueryAsync(cancellationToken);
+    }
+
+    private async Task<int> GetConfigurationValueAsync(int option, string code, CancellationToken cancellationToken)
+    {
+        await using var connection = new SqlConnection(_connectionString);
+        await connection.OpenAsync(cancellationToken);
+
+        var parameters = new DynamicParameters();
+        parameters.Add("@pOption", option, DbType.Int32);
+        parameters.Add("@pCode", code, DbType.String);
+
+        var rawValue = await connection.QuerySingleAsync<object>(
+            "spLEAP",
+            parameters,
+            commandType: CommandType.StoredProcedure);
+
+        return rawValue switch
+        {
+            int intValue => intValue,
+            long longValue => (int)longValue,
+            decimal decimalValue => (int)decimalValue,
+            string stringValue when int.TryParse(stringValue, out var parsed) => parsed,
+            _ => throw new InvalidOperationException($"Configured value for '{code}' is not a valid integer.")
+        };
     }
 
     private static DataTable CreateAttendanceTable(int serverId, IEnumerable<BiometricAttendanceRecord> records)
