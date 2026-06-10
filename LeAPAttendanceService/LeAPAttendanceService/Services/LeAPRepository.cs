@@ -111,19 +111,15 @@ public sealed class LeAPRepository : ILeAPRepository
         parameters.Add("@pOption", option, DbType.Int32);
         parameters.Add("@pCode", code, DbType.String);
 
-        var rawValue = await connection.QuerySingleAsync<object>(
+        var result = await connection.QuerySingleAsync<LeapConfigValue>(
             "spLEAP",
             parameters,
             commandType: CommandType.StoredProcedure);
 
-        return rawValue switch
-        {
-            int intValue => intValue,
-            long longValue => (int)longValue,
-            decimal decimalValue => (int)decimalValue,
-            string stringValue when int.TryParse(stringValue, out var parsed) => parsed,
-            _ => throw new InvalidOperationException($"Configured value for '{code}' is not a valid integer.")
-        };
+        if (!int.TryParse(result?.Value?.Trim(), out var value))
+            throw new InvalidOperationException($"Invalid integer Value for '{code}': {result?.Value}");
+
+        return value;
     }
 
     private static DataTable CreateAttendanceTable(int serverId, IEnumerable<BiometricAttendanceRecord> records)
